@@ -124,10 +124,27 @@ For more context, see [Is web scraping legal?](https://blog.apify.com/is-web-scr
 - **~25 reviews per company**: SiteJabber's server-side rendering limits the number of reviews available per page load. For comprehensive analysis, combine with other review platforms.
 - **Sort by rating**: Use `lowest_rating` to focus on complaints, or `highest_rating` to analyze what customers love.
 
+## Why this scraper?
+
+- **Lightweight and fast** — uses CheerioCrawler (HTTP only, no browser), making it the cheapest review scraper to run.
+- **Handles the SiteJabber/SmartCustomer rebrand** — automatically follows the redirect. Works with both old and new URLs.
+- **Pay-per-result** — $1.00 per 1,000 reviews. No reviews = no charge.
+
+## API access
+
+Call this Actor programmatically from any language:
+
+```bash
+curl "https://api.apify.com/v2/acts/quasi_grass~sitejabber-review-scraper/run-sync-get-dataset-items?token=YOUR_TOKEN" \
+  -d '{"companyUrls": ["amazon.com"], "maxReviewsPerCompany": 25}'
+```
+
+Or use the [Apify client](https://docs.apify.com/api/client/js/) for Node.js, Python, or any language. Works with Google Sheets, Zapier, Make, Slack, and 100+ integrations.
+
 ## Related scrapers
 
 Combine with our other review platform scrapers for comprehensive reputation analysis:
 
-- [Trustpilot Review Scraper](https://apify.com/zcag/trustpilot-review-scraper)
-- [PissedConsumer Review Scraper](https://apify.com/zcag/pissedconsumer-review-scraper)
-- [ConsumerAffairs Review Scraper](https://apify.com/zcag/consumeraffairs-review-scraper)
+- [Trustpilot Reviews Scraper](https://apify.com/quasi_grass/trustpilot-review-scraper)
+- [PissedConsumer Reviews Scraper](https://apify.com/quasi_grass/pissedconsumer-review-scraper)
+- [ConsumerAffairs Reviews Scraper](https://apify.com/quasi_grass/consumeraffairs-review-scraper)

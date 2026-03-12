@@ -1,8 +1,8 @@
 {
     "actorSpecification": 1,
     "name": "sitejabber-review-scraper",
-    "title": "SiteJabber Review Scraper",
-    "description": "Scrape reviews, ratings, and company data from SiteJabber (SmartCustomer). Extract structured review data including ratings, text, author info, dates, and company profiles with star distributions.",
+    "title": "SiteJabber Reviews Scraper API | $1.00/1K Reviews",
+    "description": "Scrape SiteJabber (SmartCustomer) reviews, ratings, and company profiles. Extract recommendation rates, verification status, star distributions, and structured review data. Lightweight CheerioCrawler — no browser needed. $1.00 per 1,000 reviews.",
     "version": "0.1",
     "buildTag": "latest",
     "dockerfile": "../Dockerfile",
