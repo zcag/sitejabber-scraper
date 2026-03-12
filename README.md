@@ -167,3 +167,4 @@ Combine with our other review platform scrapers for comprehensive reputation ana
 - [Trustpilot Reviews Scraper](https://apify.com/quasi_grass/trustpilot-review-scraper)
 - [PissedConsumer Reviews Scraper](https://apify.com/quasi_grass/pissedconsumer-review-scraper)
 - [ConsumerAffairs Reviews Scraper](https://apify.com/quasi_grass/consumeraffairs-review-scraper)
+- [Capterra Reviews Scraper](https://apify.com/quasi_grass/capterra-review-scraper)
