@@ -1,26 +1,49 @@
 # SiteJabber Review Scraper
 
-Extract reviews, ratings, and company profile data from [SiteJabber](https://www.sitejabber.com) (now SmartCustomer).
+Extract reviews, ratings, and company profile data from [SiteJabber](https://www.sitejabber.com/) (now [SmartCustomer](https://www.smartcustomer.com/)) — a major consumer review platform with millions of business reviews.
 
-**Zero competition** — no other Apify actor scrapes SiteJabber/SmartCustomer.
+Collect structured review data including star ratings, review text, author details, verification status, and company-level statistics like recommendation rates and star distributions. Built for reputation monitoring, competitive intelligence, and consumer research.
 
-## What it does
+## What data can you extract from SiteJabber?
 
-This scraper extracts structured data from SiteJabber company review pages:
+| Field | Example |
+|-------|---------|
+| Star rating | 1-5 |
+| Review title | "Great service" |
+| Full review text | Complete review content |
+| Author name | "John D." |
+| Published date | "2026-03-01" |
+| Verified status | true/false |
+| Has media | true/false |
+| Review URL | Direct link to review |
+| Company name | "Amazon" |
+| Overall rating | 2.6 |
+| Total reviews | 11,106 |
+| Star distribution | Percentage per star |
+| Recommendation rate | 47% |
+| Categories | "Shopping" |
 
-- **Reviews**: rating, title, full text, author info, dates, verification status
-- **Company profiles**: overall rating, total reviews, star distribution, recommendation rate, categories
+## How to scrape SiteJabber reviews
+
+1. Click **Try for free** to open the Actor in Apify Console
+2. Enter company domains or SiteJabber URLs (e.g., `amazon.com` or `https://www.sitejabber.com/reviews/amazon.com`)
+3. Set the maximum number of reviews per company
+4. Optionally sort by date or rating, and filter by star rating
+5. Click **Start** and wait for the run to finish
+6. Download results as JSON, CSV, or Excel — or access via the Apify API
+
+Schedule automatic runs to track review trends over time. Connect to Google Sheets, Slack, Zapier, or webhooks.
 
 ## Input
 
-| Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| `companyUrls` | string[] | *required* | SiteJabber URLs or domain names (e.g. `amazon.com` or `https://www.sitejabber.com/reviews/amazon.com`) |
-| `maxReviewsPerCompany` | number | 100 | Max reviews per company. 0 = unlimited |
-| `sortBy` | string | `recent` | Sort order: `recent`, `highest_rating`, `lowest_rating` |
-| `filterByStars` | string | `all` | Filter: `all`, `1`, `2`, `3`, `4`, `5` |
-| `includeCompanyInfo` | boolean | `true` | Include company profile as first result |
-| `proxyConfig` | object | Apify Proxy | Proxy settings |
+| Field | Type | Description | Default |
+|-------|------|-------------|---------|
+| `companyUrls` | string[] | SiteJabber URLs or domain names (e.g., `amazon.com` or `https://www.sitejabber.com/reviews/amazon.com`) | required |
+| `maxReviewsPerCompany` | number | Max reviews per company. 0 = unlimited. | 100 |
+| `sortBy` | string | `recent`, `highest_rating`, or `lowest_rating` | `recent` |
+| `filterByStars` | string | `all`, `1`, `2`, `3`, `4`, or `5` | `all` |
+| `includeCompanyInfo` | boolean | Include company profile with aggregate statistics | true |
+| `proxyConfig` | object | Proxy configuration | Apify Proxy (datacenter) |
 
 ### Example input
 
@@ -38,7 +61,7 @@ This scraper extracts structured data from SiteJabber company review pages:
 
 ## Output
 
-### Review object
+### Review
 
 ```json
 {
@@ -56,7 +79,7 @@ This scraper extracts structured data from SiteJabber company review pages:
 }
 ```
 
-### Company profile object
+### Company profile
 
 ```json
 {
@@ -71,28 +94,40 @@ This scraper extracts structured data from SiteJabber company review pages:
 }
 ```
 
-## How it works
+## How much does it cost to scrape SiteJabber?
 
-1. **JSON-LD extraction**: Reads structured review data from the page's embedded schema markup
-2. **HTML enrichment**: Extracts additional data (star distribution, categories, verified badges) from page HTML
-3. **Proxy rotation**: Uses Apify Proxy to avoid rate limiting
-4. **Multiple companies**: Scrape reviews for many companies in a single run
-5. **Auto-redirect**: Handles SiteJabber → SmartCustomer redirect transparently
+This Actor uses CheerioCrawler (HTTP requests only, no browser), making it extremely cost-efficient:
+
+- **~$0.01-0.02 per company** with datacenter proxy
+
+SiteJabber is one of the cheapest review platforms to scrape. The Apify Free plan includes $5/month of credits — enough for hundreds of companies.
 
 ## Use cases
 
-- **Competitor analysis**: Compare review sentiment across competitors on SiteJabber
-- **Brand monitoring**: Track reputation changes over time
-- **Market research**: Analyze customer satisfaction in specific industries
-- **Review aggregation**: Collect reviews for dashboards or reports
-- **Cross-platform comparison**: Pair with Trustpilot data for multi-platform analysis
+- **Reputation monitoring** — Track your brand's SiteJabber reviews and recommendation rate over time. Catch negative trends early with scheduled runs.
+- **Competitive analysis** — Compare review volumes, ratings, and recommendation rates across competitors.
+- **Cross-platform analysis** — Combine SiteJabber data with Trustpilot and other review platforms for a complete reputation picture.
+- **Market research** — Understand consumer sentiment in specific product categories before entering a market.
+- **Verification analysis** — Filter for verified reviews only to get higher-quality sentiment signals.
+- **Customer service insights** — Identify common praise and complaints to improve your product or service.
 
-## Cost estimate
+## Is it legal to scrape SiteJabber?
 
-Using Apify Proxy (datacenter), scraping reviews for one company costs approximately $0.01-0.02 in platform usage.
+Web scraping of publicly available data is generally legal. SiteJabber reviews are publicly accessible without login. This Actor only collects publicly visible information.
 
-## Notes
+For more context, see [Is web scraping legal?](https://blog.apify.com/is-web-scraping-legal/) on the Apify blog. Always review applicable terms of service and data protection regulations for your use case.
 
-- Extracts up to ~25 reviews per company per page load (limited by server-side rendering)
-- SiteJabber rebranded to SmartCustomer — both URLs work
-- Review data depends on what SiteJabber exposes publicly
+## Tips
+
+- **Use domain names as input**: Enter `amazon.com` directly — no need for full SiteJabber URLs.
+- **SiteJabber is now SmartCustomer**: The platform rebranded, but both URLs work. The scraper handles the redirect automatically.
+- **~25 reviews per company**: SiteJabber's server-side rendering limits the number of reviews available per page load. For comprehensive analysis, combine with other review platforms.
+- **Sort by rating**: Use `lowest_rating` to focus on complaints, or `highest_rating` to analyze what customers love.
+
+## Related scrapers
+
+Combine with our other review platform scrapers for comprehensive reputation analysis:
+
+- [Trustpilot Review Scraper](https://apify.com/zcag/trustpilot-review-scraper)
+- [PissedConsumer Review Scraper](https://apify.com/zcag/pissedconsumer-review-scraper)
+- [ConsumerAffairs Review Scraper](https://apify.com/zcag/consumeraffairs-review-scraper)
