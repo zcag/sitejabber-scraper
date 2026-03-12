@@ -1,0 +1,55 @@
+{
+    "title": "SiteJabber Review Scraper",
+    "description": "Scrape reviews from SiteJabber (SmartCustomer) company pages.",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "companyUrls": {
+            "title": "Company URLs or domains",
+            "description": "List of SiteJabber company URLs (e.g., https://www.sitejabber.com/reviews/amazon.com) or just the domain (e.g., amazon.com).",
+            "type": "array",
+            "items": { "type": "string" },
+            "editor": "stringList",
+            "prefill": ["amazon.com"]
+        },
+        "maxReviewsPerCompany": {
+            "title": "Max reviews per company",
+            "description": "Maximum number of reviews to scrape per company. Set to 0 for unlimited.",
+            "type": "integer",
+            "default": 100,
+            "minimum": 0,
+            "editor": "number"
+        },
+        "sortBy": {
+            "title": "Sort reviews by",
+            "description": "How to sort the reviews.",
+            "type": "string",
+            "enum": ["recent", "highest_rating", "lowest_rating"],
+            "default": "recent",
+            "editor": "select"
+        },
+        "filterByStars": {
+            "title": "Filter by star rating",
+            "description": "Only scrape reviews with this star rating. Use 'all' for no filter.",
+            "type": "string",
+            "enum": ["all", "1", "2", "3", "4", "5"],
+            "default": "all",
+            "editor": "select"
+        },
+        "includeCompanyInfo": {
+            "title": "Include company info",
+            "description": "Include a company profile record with overall rating, total reviews, and star distribution.",
+            "type": "boolean",
+            "default": true
+        },
+        "proxyConfig": {
+            "title": "Proxy configuration",
+            "description": "Use Apify Proxy or custom proxies.",
+            "type": "object",
+            "editor": "proxy",
+            "sectionCaption": "Proxy settings",
+            "default": { "useApifyProxy": true }
+        }
+    },
+    "required": ["companyUrls"]
+}
