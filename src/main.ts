@@ -324,8 +324,8 @@ const crawler = new CheerioCrawler({
                     companyInfoEmitted,
                 },
             }]);
-        } else if (reviews.length > 0 && totalPages <= 1) {
-            // If we couldn't detect total pages but got reviews, try next page speculatively
+        } else if (reviews.length > 0 && totalPages <= 1 && currentPage < 100) {
+            // If we couldn't detect total pages but got reviews, try next page speculatively (capped at 100)
             const nextUrl = buildPageUrl(companyBaseUrl, currentPage + 1);
             await c.addRequests([{
                 url: nextUrl,
