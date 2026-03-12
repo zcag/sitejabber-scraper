@@ -136,9 +136,36 @@ function extractFromJsonLd($: CheerioAPI, companyDomain: string, companyUrl: str
                         recommendationRate: 0,
                         categories: [],
                     };
+
+                    // Reviews may be nested inside the Organization object
+                    const nestedReviews = item.review || [];
+                    for (const r of nestedReviews) {
+                        if (r['@type'] === 'Review') {
+                            reviews.push({
+                                type: 'review',
+                                companyName: '',
+                                companyDomain,
+                                companyUrl,
+                                reviewId: r['@id'] || r.url || '',
+                                rating: parseInt(r.reviewRating?.ratingValue) || 0,
+                                reviewTitle: r.headline || '',
+                                reviewText: r.reviewBody || '',
+                                authorName: r.author?.name || '',
+                                authorUrl: r.author?.url || r.author?.['@id'] || '',
+                                authorLocation: '',
+                                authorReviewCount: 0,
+                                authorHelpfulVotes: 0,
+                                publishedDate: r.datePublished || '',
+                                isVerified: false,
+                                hasMedia: false,
+                                helpfulCount: 0,
+                                reviewUrl: r.url || '',
+                            });
+                        }
+                    }
                 }
 
-                // Individual reviews
+                // Standalone reviews (top-level)
                 if (item['@type'] === 'Review') {
                     reviews.push({
                         type: 'review',
