@@ -94,13 +94,21 @@ Schedule automatic runs to track review trends over time. Connect to Google Shee
 }
 ```
 
-## How much does it cost to scrape SiteJabber?
+## Pricing
 
-This Actor uses CheerioCrawler (HTTP requests only, no browser), making it extremely cost-efficient:
+Pay only for results — no monthly subscription.
 
-- **~$0.01-0.02 per company** with datacenter proxy
+| Reviews | Cost |
+|---------|------|
+| 1,000 | $1.00 |
+| 5,000 | $5.00 |
+| 10,000 | $10.00 |
 
-SiteJabber is one of the cheapest review platforms to scrape. The Apify Free plan includes $5/month of credits — enough for hundreds of companies.
+Platform usage is minimal — CheerioCrawler uses HTTP requests only (no browser). ~$0.01-0.02 per company in platform costs.
+
+## Try it free
+
+Every Apify account includes free credits. Set `maxReviewsPerCompany: 10` to preview the data format — no payment method required.
 
 ## Use cases
 
@@ -139,7 +147,18 @@ curl "https://api.apify.com/v2/acts/quasi_grass~sitejabber-review-scraper/run-sy
   -d '{"companyUrls": ["amazon.com"], "maxReviewsPerCompany": 25}'
 ```
 
-Or use the [Apify client](https://docs.apify.com/api/client/js/) for Node.js, Python, or any language. Works with Google Sheets, Zapier, Make, Slack, and 100+ integrations.
+```python
+from apify_client import ApifyClient
+
+client = ApifyClient("YOUR_TOKEN")
+run = client.actor("quasi_grass/sitejabber-review-scraper").call(
+    run_input={"companyUrls": ["amazon.com"], "maxReviewsPerCompany": 25}
+)
+for item in client.dataset(run["defaultDatasetId"]).iterate_items():
+    print(item)
+```
+
+Works with Google Sheets, Zapier, Make, Slack, and 100+ integrations via the [Apify platform](https://docs.apify.com/integrations).
 
 ## Related scrapers
 
